@@ -1,8 +1,5 @@
 import { useCheckUserQuery } from '@/entities/auth/api';
-import {
-    AuthPage,
-    AdminHomePage,
-} from '@/pages';
+import { AuthPage, AdminHomePage } from '@/pages';
 import { AdminCount } from '@/pages/admin/count/ui';
 import { TOKEN, TOKEN_KEY, useAppActions, useAppSelector } from '@/shared';
 import { AdminLayout } from '@/widgets';
@@ -38,6 +35,16 @@ const App = () => {
             navigate(currentPathname);
         }
     }, [data, isLoading]);
+
+    useEffect(() => {
+        // @ts-ignore
+        if (window.TelegramWebApp) {
+            // @ts-ignore
+            const tg = window.TelegramWebApp;
+            tg.expand();
+            tg.ready();
+        }
+    }, []);
 
     if (isLoading) {
         return (
