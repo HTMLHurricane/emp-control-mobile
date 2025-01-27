@@ -43,13 +43,13 @@ const AuthForm = () => {
     }, [isError, isSuccess]);
 
     return (
-        <div className="w-[400px]">
+        <div className="w-[400px] flex justify-center items-center flex-col">
             <h1 className="text-center mb-5">Авторизация</h1>
             <Form
                 name="basic"
                 onFinish={onFinish}
                 form={form}
-                style={{ width: 400 }}
+                style={{ width: 300 }}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 layout="vertical"
