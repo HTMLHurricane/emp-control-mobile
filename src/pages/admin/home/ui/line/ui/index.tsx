@@ -3,10 +3,8 @@ import { Table, TableProps, Tag } from 'antd';
 import { useState } from 'react';
 import { useAppSelector, Card, Title } from '@/shared';
 import { IDailyAttendance } from '@/entities/home/model';
-import { useNavigate } from 'react-router-dom';
 import { columnResponseText } from '@/shared/const/css';
 
-// Функция для расчета разницы времени
 export const calculateDelay = (actualTime?: string, scheduledTime?: string) => {
     if (!actualTime || !scheduledTime) return { hours: 0, minutes: 0 };
 
@@ -48,7 +46,6 @@ const Line = () => {
     const { homeDate, collapsed, attendanceBranch } = useAppSelector();
     const [employeeTablePage, setEmployeeTablePage] = useState(1);
     const [employeeTableLimit, setEmployeeTableLimit] = useState(10);
-    const navigate = useNavigate();
 
     const { data, isLoading } = useGetLineDataQuery(
         {
@@ -65,23 +62,7 @@ const Line = () => {
             title: 'ФИО',
             key: 'full_name',
             dataIndex: 'full_name',
-            className: `${columnResponseText} w-[100px] md:w-[200px]`,
-        },
-        {
-            title: 'Должность',
-            key: 'position',
-            dataIndex: 'position',
-            render: (_, res) => <Tag>{res.position_name}</Tag>,
-            responsive: ['md', 'lg', 'xl'],
-            className: `${columnResponseText}`,
-        },
-        {
-            title: 'Филиал',
-            key: 'branch',
-            dataIndex: 'branch',
-            render: (_, res) => <Tag>{res.branch_name}</Tag>,
-            responsive: ['md', 'lg', 'xl'],
-            className: `${columnResponseText}`,
+            className: `${columnResponseText} w-[220px]`,
         },
         {
             title: 'Пришел',
@@ -92,19 +73,6 @@ const Line = () => {
                     {item ? `${item?.slice(0, 5)} ч` : ''}
                 </Tag>
             ),
-            className: `${columnResponseText}`,
-        },
-        {
-            title: 'Опоздал',
-            key: 'delay',
-            render: (_, res) => {
-                const delay = calculateDelay(res.time_in, res.time_schedule_in);
-                return (
-                    <Tag color={'red'}>
-                        {delay.hours} ч {delay.minutes} м
-                    </Tag>
-                );
-            },
             className: `${columnResponseText}`,
         },
     ];
@@ -129,10 +97,6 @@ const Line = () => {
                         setEmployeeTableLimit(limit);
                     },
                 }}
-                onRow={(rec) => ({
-                    onClick: () => navigate(`employees/${rec.id}`),
-                    className: 'hover:cursor-pointer',
-                })}
                 className="mt-4 w-full sm:w-full md:w-auto lg:w-auto xl:w-auto"
             />
         </Card>

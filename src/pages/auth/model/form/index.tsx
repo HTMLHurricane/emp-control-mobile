@@ -49,7 +49,7 @@ const AuthForm = () => {
                 name="basic"
                 onFinish={onFinish}
                 form={form}
-                style={{ width: 300 }}
+                style={{ width: 350 }}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 layout="vertical"
